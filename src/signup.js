@@ -1,99 +1,84 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 
-class signup extends Component {
-  state = {
-    username: "",
-    password: "",
-    email: "",
-    created: false,
-    errorMessage: "",
-  };
+export default function Signup() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [created, setCreated] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  handleChange = (event) => {
-    const { name, value } = event.target;
-
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  createUser = (event) => {
+  function createUser(event) {
     event.preventDefault();
     event.target.reset();
-    const { username, email, password } = this.state;
 
     let user = {
-      username: username,
-      email: email,
-      password: password,
+      username,
+      email,
+      password,
     };
 
-    fetch("http://localhost:3000/users", {
-      method: "POST",
+    fetch('http://localhost:3000/users', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
       },
       body: JSON.stringify({ user }),
     })
       .then((r) => r.json())
       .then((response) => {
-        if (response.status === "created") {
-          this.setState({ created: true, errorMessage: "" });
+        if (response.status === 'created') {
+          setCreated(true);
+          setErrorMessage('');
         }
       })
       .catch((response) =>
-        this.setState({
-          errorMessage:
-            "Uh-oh! It didn't work...Make sure your server is running!",
-        })
+        setErrorMessage(
+          "Uh-oh! It didn't work...Make sure your server is running!"
+        )
       );
-  };
-
-  render() {
-    return (
-      <div>
-        {this.state.created ? (
-          <Redirect to="/login" />
-        ) : (
-          <div>
-            <div className="please-log-in">
-              <p>{this.state.errorMessage}</p>
-            </div>
-            <br />
-            <form onSubmit={this.createUser}>
-              <input
-                type="text"
-                name="email"
-                placeholder="Email"
-                onChange={this.handleChange}
-              />
-              <br />
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                onChange={this.handleChange}
-              />
-              <br />
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={this.handleChange}
-              />
-              <br />
-              <br />
-              <button type="submit">Submit</button>
-            </form>
-          </div>
-        )}
-        <br />
-        <br />
-      </div>
-    );
   }
-}
 
-export default signup;
+  return (
+    <div>
+      {created ? (
+        <Redirect to="/login" />
+      ) : (
+        <div>
+          <div className="please-log-in">
+            <p>{errorMessage}</p>
+          </div>
+          <br />
+          <form onSubmit={createUser}>
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <br />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <br />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <br />
+            <br />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      )}
+      <br />
+      <br />
+    </div>
+  );
+}
