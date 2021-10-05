@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import SignUp from './Signup';
-import Login from './Login';
-import Home from './Home';
-import AuthDemo from './AuthDemo';
+import SignUp from './ZSignup';
+import Login from './ZLogin';
+import Home from './ZHome';
+import AuthDemo from './ZAuthDemo';
 
 import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 
