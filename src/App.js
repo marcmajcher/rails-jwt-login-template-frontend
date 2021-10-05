@@ -27,9 +27,6 @@ export default function App() {
     if (typeof token !== 'undefined' && token.length > 1
       && token !== 'undefined'
     ) {
-      console.log("TERKEN",token)
-      console.log(typeof token)
-      console.log(token.length)
       fetch('http://localhost:3000/auto_login', {
         method: 'POST',
         headers: {
