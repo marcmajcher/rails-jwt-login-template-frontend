@@ -3,7 +3,7 @@ import './App.css';
 import SignUp from './Signup';
 import Login from './Login';
 import Home from './Home';
-import AuthDemo from './ZAuthDemo';
+import AuthDemo from './AuthDemo';
 
 import { BrowserRouter, Switch, Route, Link, Redirect } from 'react-router-dom';
 
